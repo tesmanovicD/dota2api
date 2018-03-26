@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { getPlayer } from '../util';
+import { inject } from 'mobx-react';
 
+@inject("account")
 export default class SearchBar extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    getPlayer(e.target.playerName.value);
+    getPlayer(e.target.playerName.value)
+    .then(player => this.props.account.setAccountInfo(player));
   }
   render() {
-
     return (
       <div className="searchbar">
         <form onSubmit={this.handleSubmit}>

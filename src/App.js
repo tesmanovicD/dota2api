@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import SearchBar from './Components/SearchBar';
-
+import PlayerInfo from './Components/PlayerInfo';
 
 class App extends Component {
   render() {
@@ -9,6 +9,7 @@ class App extends Component {
         <div className="App">
           <div className="container">
             <SearchBar />
+            <PlayerInfo />
           </div>
         </div>
     );
