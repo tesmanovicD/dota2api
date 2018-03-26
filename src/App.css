@@ -1,0 +1,16 @@
+.site-header {
+  color: #f00;
+}
+
+.playerName h2 {
+  margin: 0px;
+}
+
+.rankingDetails h4 {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.headernavigation ul li {
+  display: inline-block;
+}

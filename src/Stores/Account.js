@@ -2,10 +2,10 @@ import { observable, action } from 'mobx';
 
 
 class Account {
-  @observable accountInfo = [];
+  @observable accountInfo = {set: false};
   @action
   setAccountInfo(result) {
-    this.accountInfo.push(
+    this.accountInfo =
       {
         "soloCompRank": result.solo_competitive_rank,
         "rankTier": result.rank_tier,
@@ -13,9 +13,10 @@ class Account {
         "accountId": result.profile.account_id,
         "avatar": result.profile.avatar,
         "playerName": result.profile.personaname,
-        "profileUrl": result.profile.profileurl
+        "profileUrl": result.profile.profileurl,
+        "set": true
       }
-    )
+
   }
 }
 
