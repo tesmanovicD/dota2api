@@ -11,14 +11,14 @@ const HeaderNavigation = () => (
           <Link to="/"> Overview </Link>
         </li>
         <li className="list-group-item">
-          <Link to="/matches/:id"> Matches </Link>
+          <Link to="/matches"> Matches </Link>
         </li>
         <li className="list-group-item">
           <Link to="/peers"> Player Peers </Link>
         </li>
       </ul>
 
-      <Route path="/matches/:id" component={PlayerMatches} />
+      <Route path="/matches" component={PlayerMatches} limit="20" />
       <Route path="/peers" component={PlayerPeers} />
     </div>
   </Router>

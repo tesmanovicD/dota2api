@@ -7,7 +7,8 @@ export default class SearchBar extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     getPlayer(e.target.playerName.value)
-    .then(player => this.props.account.setAccountInfo(player));
+    .then(player => this.props.account.setAccountInfo(player))
+    .catch(err => alert("User was not found"))
   }
   render() {
     return (
