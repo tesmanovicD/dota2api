@@ -19,10 +19,9 @@ export default class PlayerMatches extends Component {
 
   render() {
     const matches = this.props.account.accountMatches.map(match => {
-      let gameModes = this.props.game.gameModes.filter(x=>x.id === match.gameMode);
-      let heroesName = this.props.game.heroesData.filter(x=>x.id === match.heroId)
-      let isRadiant = match.playerSlot > 127 ? false : true;
-      let matchStatus = isRadiant === true ? (match.matchWon === true ? "Won Match" : "Lost Match") : (match.matchWon === true ? "Lost Match" : "Won Match");
+      let gameModes = this.props.game.gameModes.find(x=>x.id === match.gameMode).name;
+      let heroesName = this.props.game.heroesData.find(x=>x.id === match.heroId).name;
+
 
       return (
         <tbody key={match.matchId}>
@@ -34,10 +33,10 @@ export default class PlayerMatches extends Component {
           <th>K/D/A</th>
         </tr>
         <tr>
-          <td>{heroesName[0].name}</td>
-          <td>{matchStatus}</td>
-          <td>{gameModes[0].name}</td>
-          <td>{Math.round(match.duration /60)} min</td>
+          <td>{heroesName}</td>
+          <td>{match.matchStatus}</td>
+          <td>{gameModes}</td>
+          <td>{match.duration} min</td>
           <td>
             {match.kills}/{match.deaths}/{match.assists}
           </td>

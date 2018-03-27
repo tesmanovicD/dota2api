@@ -21,13 +21,15 @@ class Account {
   setAccountMatches(match) {
     this.accountMatches = [];
     match.forEach(x => {
+      let isRadiant = match.playerSlot > 127 ? false : true;
+      let matchStatus = isRadiant === true ? (x.radiant_win === true ? "Won Match" : "Lost Match") : (x.radiant_win === true ? "Lost Match" : "Won Match");
+
       this.accountMatches.push({
         "matchId": x.match_id,
         "gameMode": x.game_mode,
         "heroId": x.hero_id,
-        "playerSlot": x.player_slot,
-        "matchWon": x.radiant_win,
-        "duration": x.duration,
+        "matchStatus": matchStatus,
+        "duration": Math.round(x.duration/60),
         "kills": x.kills,
         "deaths": x.deaths,
         "assists": x.assists
