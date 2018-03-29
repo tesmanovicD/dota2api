@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getPlayerMatches, getHeroesData } from '../util';
 import { observer, inject } from 'mobx-react';
+import PrintMatch from './PrintMatch';
 
 @inject("account","game")
 @observer
@@ -24,24 +25,7 @@ export default class PlayerMatches extends Component {
 
 
       return (
-        <tbody key={match.matchId}>
-        <tr>
-          <th>Hero</th>
-          <th>Result</th>
-          <th>Type</th>
-          <th>Duration</th>
-          <th>K/D/A</th>
-        </tr>
-        <tr>
-          <td>{heroesName}</td>
-          <td>{match.matchStatus}</td>
-          <td>{gameModes}</td>
-          <td>{match.duration} min</td>
-          <td>
-            {match.kills}/{match.deaths}/{match.assists}
-          </td>
-        </tr>
-      </tbody>
+        <PrintMatch match={match} gameModes={gameModes} heroesName={heroesName}/>
       )
     })
     return (
