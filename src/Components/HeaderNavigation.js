@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import PlayerMatches from './PlayerMatches';
 import PlayerPeers from './PlayerPeers';
+import PlayerOverview from './PlayerOverview';
 
 const HeaderNavigation = () => (
   <Router>
@@ -18,7 +19,8 @@ const HeaderNavigation = () => (
         </li>
       </ul>
 
-      <Route path="/matches" component={PlayerMatches} limit="20" />
+      <Route exact path="/" component={PlayerOverview} />
+      <Route path="/matches" component={PlayerMatches} />
       <Route path="/peers" component={PlayerPeers} />
     </div>
   </Router>
