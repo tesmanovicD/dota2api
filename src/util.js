@@ -27,3 +27,11 @@ export function getPlayerWinRatio(playerId) {
     .then(resolve => resolve.json())
     .then(result => result.json());
 }
+
+export function getHeroesPlayed(playerId) {
+  const API_URL = `https://api.opendota.com/api/players/${playerId}/heroes`;
+  return fetch(API_URL)
+    .then(resolve => resolve.json())
+    .then(heroesPlayed => heroesPlayed)
+    .catch(err => alert("No recent heroes"))
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const PrintMatch = (props) => (
-  <tbody key={props.match.matchId}>
+  <tbody>
   <tr>
     <th>Hero</th>
     <th>Result</th>

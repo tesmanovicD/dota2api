@@ -4,6 +4,7 @@ import { observable, action } from 'mobx';
 class Account {
   @observable accountInfo = {set: false};
   @observable accountMatches = [];
+  @observable recentHeroes = [];
   @action
   setAccountInfo(result) {
     this.accountInfo =
