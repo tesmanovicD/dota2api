@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { getHeroesPlayed, getHeroesData } from '../util';
 import {observer, inject} from 'mobx-react';
-import PrintRecentHeroes from './PrintRecentHeroes';
+import PrintMostPlayed from './PrintMostPlayed';
 import { BarLoader } from 'react-spinners';
+import moment from 'moment';
 
 @inject("account","game")
 @observer
@@ -20,15 +21,12 @@ export default class RecentHeroes extends Component {
         .catch(err => console.log(err))
         .then(heroesData => {
           getHeroesPlayed(player.accountId)
-            .then(result => {
-              result.forEach(row => {
-                let heroName = this.props.game.heroesData.find(x => x.id === parseInt(row.hero_id, 10)).name;
-                row["hero_name"] = heroName;
-                this.props.account.recentHeroes.push(row);
-              })
-            })
+            .then(heroesArr => {
+              const limit = this.props.limit ? this.props.limit : heroesArr.length;
+              this.props.account.setMostPlayedHeroes(heroesArr, this.props.game.heroesData, limit);
+            }).then(this.setState({requestStatus: "SUCCESS"}))
         })
-        .then(this.setState({requestStatus: "SUCCESS"}))
+
   }
 
   showComponentBasedOnReqStatus = (status) => {
@@ -44,23 +42,23 @@ export default class RecentHeroes extends Component {
           )
       case 'ERROR':
         return (
-          <h2 className="alert alert-danger">Can't get the user data, try again</h2>
+          <h2 className="alert alert-danger">Cant get the user data, try again</h2>
         )
     }
   }
 
-  renderRecentHeroes = () => this.props.account.recentHeroes.map(hero => {
+  renderRecentHeroes = () => this.props.account.mostPlayedHeroes.map(hero => {
     let lastPlayed = new Date(hero.last_played*1000);
-    let lastPlayedFormated = lastPlayed.toISOString().substring(0, 10);
+    let lastPlayedFormated = moment(lastPlayed).fromNow();
     let winRatio = ((hero.win/hero.games)*100).toFixed(2);
 
-    return <PrintRecentHeroes hero={hero} lastPlayed={lastPlayedFormated} winRatio={winRatio} key={hero.hero_id}/>
+    return <PrintMostPlayed hero={hero} lastPlayed={lastPlayedFormated} winRatio={winRatio} key={hero.hero_id}/>
    });
 
   render() {
 
     return (
-      <div className="recentHeroes">
+      <div className="mostPlayedHeroes">
         {this.showComponentBasedOnReqStatus(this.state.requestStatus)}
       </div>
     )
