@@ -19,28 +19,30 @@ class Account {
         "set": true
       }
   }
-  setAccountMatches(match, game) {
+  setAccountMatches(match, game, limit) {
+    if(!limit) limit = match.length
     this.accountMatches = [];
-    match.forEach(x => {
-      let gameMode = game.gameModes.find(a=>a.id === x.game_mode).name; //gettering the name of the current gameMode
-      let heroName = game.heroesData.find(a=>a.id === x.hero_id).name; //gettering the name of the current hero_id
-      let isRadiant = match.playerSlot > 127 ? false : true;
-      let matchStatus = isRadiant === true ? (x.radiant_win === true ? "Won Match" : "Lost Match") : (x.radiant_win === true ? "Lost Match" : "Won Match");
+
+    for(let i=0; i<limit; i++) {
+      let gameMode = game.gameModes.find(a=>a.id === match[i].game_mode).name; //gettering the name of the current gameMode
+      let heroName = game.heroesData.find(a=>a.id === match[i].hero_id).name; //gettering the name of the current hero_id
+      let isRadiant = match[i].playerSlot > 127 ? false : true;
+      let matchStatus = isRadiant === true ? (match[i].radiant_win === true ? "Won Match" : "Lost Match") : (match[i].radiant_win === true ? "Lost Match" : "Won Match");
 
       this.accountMatches.push({
-        "matchId": x.match_id,
-        "gameModeId": x.game_mode,
-        "heroId": x.hero_id,
+        "matchId": match[i].match_id,
+        "gameModeId": match[i].game_mode,
+        "heroId": match[i].hero_id,
         "heroName": heroName,
         "matchStatus": matchStatus,
-        "duration": Math.round(x.duration/60),
+        "duration": Math.round(match[i].duration/60),
         "gameMode": gameMode,
-        "kills": x.kills,
-        "deaths": x.deaths,
-        "assists": x.assists
+        "kills": match[i].kills,
+        "deaths": match[i].deaths,
+        "assists": match[i].assists
       })
-    });
-  }
+    };
+    }
 
   setMostPlayedHeroes(heroes, heroesData, limit) {
     this.mostPlayedHeroes = [];

@@ -14,17 +14,17 @@ export default class PlayerMatches extends Component {
 
   componentWillMount() {
     const player = this.props.account.accountInfo;
-    const limit = this.props.limit ? this.props.limit : 20;
+    // const limit = this.props.limit ? this.props.limit : 20;
 
     getHeroesData()
     .then(result => this.props.game.setHeroesData(result))
     .then(heroesData =>
-      getPlayerMatches(player.accountId, limit)
+      getPlayerMatches(player.accountId)
         .then(result => {
-          this.props.account.setAccountMatches(result,this.props.game)
+          this.props.account.setAccountMatches(result,this.props.game,this.props.limit)
         }).then(this.setState({requestStatus: "SUCCESS"}))
     )
-      .catch(err => {console.log(err);this.setState({requestStatus: "ERROR"})})
+      .catch(err => {this.setState({requestStatus: "ERROR"})})
   }
 
   showComponentBasedOnReqStatus = (status) => {

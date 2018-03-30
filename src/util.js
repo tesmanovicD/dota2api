@@ -5,8 +5,8 @@ export function getPlayer(playerName) {
     .then(result => result);
 }
 
-export function getPlayerMatches(playerId, limit) {
-  const API_URL = `https://api.opendota.com/api/players/${playerId}/matches?limit=${limit}`;
+export function getPlayerMatches(playerId) {
+  const API_URL = `https://api.opendota.com/api/players/${playerId}/matches`;
   return fetch(API_URL)
     .then(resolve => resolve.json())
     .then(result => result)
