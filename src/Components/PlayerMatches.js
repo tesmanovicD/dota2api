@@ -68,6 +68,44 @@ export default class PlayerMatches extends Component {
     }
   }
 
+  sortArray = (type, order) => {
+    let matchesCopy = this.props.account.accountMatches.slice();
+
+    switch (type) {
+      case "match":
+        this.sortMatches(matchesCopy, order);
+        break;
+
+      case "result":
+        this.sortResults(matchesCopy, order);
+        break;
+
+      default:
+        alert("error, type is not found");
+        break;
+    }
+  }
+
+  sortMatches = (matchesCopy,orderBy) => {
+    if(orderBy === "descending") {
+      matchesCopy.sort((a,b) => b["duration"] - a["duration"])
+      this.props.account.sortArray(matchesCopy)
+    } else {
+      matchesCopy.sort((a,b) => a["duration"] - b["duration"])
+      this.props.account.sortArray(matchesCopy)
+    }
+  }
+
+  sortResults = (matchesCopy, orderBy) => {
+    if(orderBy === "descending") {
+      matchesCopy.sort((a,b) => b["matchStatus"].length - a["matchStatus"].length)
+      this.props.account.sortArray(matchesCopy)
+    } else {
+      matchesCopy.sort((a,b) => a["matchStatus"].length - b["matchStatus"].length)
+      this.props.account.sortArray(matchesCopy)
+    }
+  }
+
   setPageNavigation() {
     this.props.account.indexOfLastTodo = this.props.account.currentPage * 20;
     this.props.account.indexOfFirstTodo = this.props.account.indexOfLastTodo - 20;
@@ -75,7 +113,7 @@ export default class PlayerMatches extends Component {
 
   renderPlayerMatches = () => {
     return this.props.account.accountMatches.slice(this.props.account.indexOfFirstTodo, this.props.account.indexOfLastTodo).map(match =>
-      <PrintMatch match={match} key={match.matchId} />
+      <PrintMatch match={match} key={match.matchId} sort={this.sortArray} />
   )}
 
   renderNavigation = () => {

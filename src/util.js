@@ -25,7 +25,7 @@ export function getPlayerWinRatio(playerId) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}/wl`;
   return fetch(API_URL)
     .then(resolve => resolve.json())
-    .then(result => result.json());
+    .then(result => resolve.json());
 }
 
 export function getHeroesPlayed(playerId, limit) {
@@ -34,4 +34,10 @@ export function getHeroesPlayed(playerId, limit) {
     .then(resolve => resolve.json())
     .then(heroesPlayed => heroesPlayed)
     .catch(err => alert("No recent heroes"))
+}
+
+export function secondsToMinutesAndSeconds(time) {
+  let minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }

@@ -1,3 +1,7 @@
+.glyphicon-chevron-up, .glyphicon-chevron-down {
+  padding-left: 5px;
+}
+
 .site-header {
   color: #f00;
 }

@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx';
 
-
 class Account {
   @observable accountInfo = {set: false};
   @observable accountMatches = [];
@@ -39,7 +38,7 @@ class Account {
         "heroId": match[i].hero_id,
         "heroName": heroName,
         "matchStatus": matchStatus,
-        "duration": Math.round(match[i].duration/60),
+        "duration": match[i].duration,
         "gameMode": gameMode,
         "kills": match[i].kills,
         "deaths": match[i].deaths,
@@ -47,6 +46,13 @@ class Account {
       })
     };
     }
+
+  sortArray(match) {
+    this.accountMatches = [];
+    match.forEach(match => {
+      this.accountMatches.push(match);
+    })
+  }
 
   setMostPlayedHeroes(heroes, heroesData, limit) {
     this.mostPlayedHeroes = [];
