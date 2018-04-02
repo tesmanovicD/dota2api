@@ -14,3 +14,21 @@
 .headernavigation ul li {
   display: inline-block;
 }
+
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px
+}
+
+.pagination li:hover {
+  cursor: pointer;
+}
+
+.pagination .active a{
+  color: #fff;
+  cursor: default;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}

@@ -5,6 +5,10 @@ class Account {
   @observable accountInfo = {set: false};
   @observable accountMatches = [];
   @observable mostPlayedHeroes = [];
+  @observable indexOfLastTodo;
+  @observable indexOfFirstTodo;
+  @observable pageNumbers = [];
+  @observable currentPage;
   @action
   setAccountInfo(result) {
     this.accountInfo =
