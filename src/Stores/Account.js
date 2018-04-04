@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+import moment from 'moment';
 
 class Account {
   @observable accountInfo = {set: false};
@@ -8,7 +9,19 @@ class Account {
   @observable indexOfFirstTodo;
   @observable pageNumbers = [];
   @observable currentPage;
+  @observable searchedAccounts = [];
   @action
+  setSearchedAccounts(accounts) {
+    this.searchedAccounts = [];
+    accounts.forEach(account => {
+      this.searchedAccounts.push({
+        "accountId": account.account_id,
+        "avatar": account.avatarfull,
+        "name": account.personaname,
+        "lastMatch": account.last_match_time === null ? "never" : moment(account.last_match_time).fromNow()
+      })
+    })
+  }
   setAccountInfo(result) {
     this.accountInfo =
       {
@@ -56,15 +69,15 @@ class Account {
 
   setMostPlayedHeroes(heroes, heroesData, limit) {
     this.mostPlayedHeroes = [];
-
     //sorting array by most played
     heroes.sort(function(a, b) {
       return b["games"] - a["games"];
     })
 
     for(let i=0; i<limit; i++) {
-      let heroName = heroesData.find(x => x.id === parseInt(heroes[i].hero_id, 10)).name; //gettering the name of the current hero_id
-      heroes[i]["hero_name"] = heroName;
+      let heroName = heroesData.find(x => x.id === parseInt(heroes[i].hero_id, 10)); //gettering the name of the current hero_id
+
+      heroes[i]["hero_name"] = heroName.name;
       if(heroes[i]["games"]>0) this.mostPlayedHeroes.push(heroes[i]);//if the user played at least once current hero -> store it
     }
   }

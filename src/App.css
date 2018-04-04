@@ -2,6 +2,10 @@
   padding-left: 5px;
 }
 
+span.glyphicon-chevron-up:hover, span.glyphicon-chevron-down:hover{
+  cursor: pointer;
+}
+
 .site-header {
   color: #f00;
 }
@@ -35,4 +39,21 @@
   cursor: default;
   background-color: #337ab7;
   border-color: #337ab7;
+}
+
+.playerBox {
+  padding: 10px 0px;
+  background-color: #2E3740;
+  border: 10px solid #fff;
+  border-bottom: none;
+  color: #FFF;
+}
+
+.playerBox h3 {
+  margin: 5px 0px 15px 0px;
+}
+
+.active {
+  color: #1E90FF;
+  font-weight: bold;
 }

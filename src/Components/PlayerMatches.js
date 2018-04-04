@@ -14,16 +14,15 @@ export default class PlayerMatches extends Component {
   }
 
   componentWillMount() {
-    const account = this.props.account;
     this.props.account.currentPage = 1;
     this.setPageNavigation();
 
     getHeroesData()
     .then(result => this.props.game.setHeroesData(result))
     .then(heroesData =>
-      getPlayerMatches(account.accountInfo.accountId)
+      getPlayerMatches(this.props.accountId || this.props.match.params.id)
         .then(result => {
-          account.setAccountMatches(result,this.props.game,this.props.limit)
+          this.props.account.setAccountMatches(result,this.props.game,this.props.limit)
         })
         .then(this.getPageNumbers)
         .then(this.setState({requestStatus: "SUCCESS"}))

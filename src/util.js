@@ -1,8 +1,18 @@
+import Request from 'superagent';
+
 export function getPlayer(playerName) {
-  const API_URL = `https://api.opendota.com/api/players/${playerName}`;
-  return fetch(API_URL)
-    .then(resolve => resolve.json())
-    .then(result => result);
+  const API_URL = `https://api.opendota.com/api/search?q=${playerName}`;
+  return Request.get(API_URL)
+    .then(response => this.props.account.setSearchedAccounts(response.body));
+}
+
+export function getPlayerById(playerId) {
+  const API_URL = `https://api.opendota.com/api/players/${playerId}`;
+  return Request.get(API_URL)
+    .then(response => this.props.account.setAccountInfo(response.body))
+    .catch(err => {
+      if (err.status === 404) alert(err.message)
+    })
 }
 
 export function getPlayerMatches(playerId) {
@@ -25,7 +35,7 @@ export function getPlayerWinRatio(playerId) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}/wl`;
   return fetch(API_URL)
     .then(resolve => resolve.json())
-    .then(result => resolve.json());
+    .then(result => result.json());
 }
 
 export function getHeroesPlayed(playerId, limit) {
