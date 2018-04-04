@@ -20,7 +20,7 @@ const PrintMatch = (props) => (
   </tr>
   <tr>
     <td>{props.match.heroName}</td>
-    <td>{props.match.matchStatus}</td>
+    <td className={`${props.match.matchStatus}-class`}>{props.match.matchStatus} Match</td>
     <td>{props.match.gameMode}</td>
     <td>{secondsToMinutesAndSeconds(props.match.duration)} min</td>
     <td>

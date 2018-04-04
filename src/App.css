@@ -57,3 +57,11 @@ span.glyphicon-chevron-up:hover, span.glyphicon-chevron-down:hover{
   color: #1E90FF;
   font-weight: bold;
 }
+
+.Won-class {
+  color: #A9CF54;
+}
+
+.Lost-class {
+  color: #C23C2A;
+}

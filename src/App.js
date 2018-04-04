@@ -12,6 +12,7 @@ class App extends Component {
         <div className="App">
           <div className="container">
             <Route exact path="/players/:id" component={RenderPlayer} />
+            <Route exact path="/players/:id/matches" component={RenderPlayer} />
             <Route exact path="/" component={SearchBar}/>
             <SearchedPlayers />
           </div>

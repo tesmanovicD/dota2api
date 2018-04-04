@@ -17,33 +17,29 @@ export function getPlayerById(playerId) {
 
 export function getPlayerMatches(playerId) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}/matches`;
-  return fetch(API_URL)
-    .then(resolve => resolve.json())
-    .then(result => result)
-    .catch(err => alert("No recent matches for current user"))
+  return Request.get(API_URL)
+    .then(response => response.body)
+    .catch(err => alert(err.message))
 }
 
 export function getHeroesData() {
   const API_URL = `https://api.opendota.com/api/heroes`
-  return fetch(API_URL)
-    .then(resolve => resolve.json())
-    .then(heroData => heroData)
-    .catch(err => alert("Can't get heroes data from API"))
+  return Request.get(API_URL)
+    .then(response => response.body)
+    .catch(err => alert(err.message))
 }
 
 export function getPlayerWinRatio(playerId) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}/wl`;
-  return fetch(API_URL)
-    .then(resolve => resolve.json())
-    .then(result => result.json());
+  return Request.get(API_URL)
+    .then(response => response.body)
 }
 
 export function getHeroesPlayed(playerId, limit) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}/heroes`;
-  return fetch(API_URL)
-    .then(resolve => resolve.json())
-    .then(heroesPlayed => heroesPlayed)
-    .catch(err => alert("No recent heroes"))
+  return Request.get(API_URL)
+    .then(response => response.body)
+    .catch(err => alert(err.message))
 }
 
 export function secondsToMinutesAndSeconds(time) {

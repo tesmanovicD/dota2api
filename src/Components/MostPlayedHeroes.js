@@ -16,7 +16,6 @@ export default class RecentHeroes extends Component {
   componentWillMount() {
       getHeroesData()
         .then(result => this.props.game.setHeroesData(result))
-        .catch(err => console.log(err))
         .then(heroesData => {
           getHeroesPlayed(this.props.account.accountInfo.accountId || this.props.accountId)
             .then(heroesArr => {
@@ -24,7 +23,6 @@ export default class RecentHeroes extends Component {
               this.props.account.setMostPlayedHeroes(heroesArr, this.props.game.heroesData, limit);
             }).then(this.setState({requestStatus: "SUCCESS"}))
         })
-
   }
 
   showComponentBasedOnReqStatus = (status) => {
