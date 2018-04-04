@@ -14,12 +14,11 @@ export default class RecentHeroes extends Component {
   }
 
   componentWillMount() {
-
       getHeroesData()
         .then(result => this.props.game.setHeroesData(result))
         .catch(err => console.log(err))
         .then(heroesData => {
-          getHeroesPlayed(this.props.account.accountInfo.accountId)
+          getHeroesPlayed(this.props.account.accountInfo.accountId || this.props.accountId)
             .then(heroesArr => {
               const limit = this.props.limit ? this.props.limit : heroesArr.length;
               this.props.account.setMostPlayedHeroes(heroesArr, this.props.game.heroesData, limit);
