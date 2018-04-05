@@ -27,7 +27,7 @@ export default class PlayerMatches extends Component {
         .then(this.getPageNumbers)
         .then(this.setState({requestStatus: "SUCCESS"}))
     )
-      .catch(err => {this.setState({requestStatus: "ERROR"})})
+      .catch(err => {console.log(err);this.setState({requestStatus: "ERROR"})})
   }
 
   showComponentBasedOnReqStatus = (status) => {

@@ -24,7 +24,9 @@ class Game {
     { id: 19, name: "Solo Mid 1v1"},
     { id: 22, name: "Ranked All Pick"}
   ];
-  @observable heroesData = [];
+  @observable heroesData = [
+    {id: 0, name: "Not picked"},
+  ];
 
   @action
   setHeroesData(hero) {

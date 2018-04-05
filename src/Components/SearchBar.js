@@ -11,7 +11,6 @@ export default class SearchBar extends Component {
   render() {
     return (
       <div className="searchbar">
-        <h2 className="text-center site-header">Dota 2 Statistic</h2>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
               <input type="text" name="playerName" placeholder="Insert the name of the player you want to search for..."/>

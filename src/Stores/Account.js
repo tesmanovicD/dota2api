@@ -41,7 +41,7 @@ class Account {
 
     for(let i=0; i<limit; i++) {
       let gameMode = game.gameModes.find(a=>a.id === match[i].game_mode).name; //gettering the name of the current gameMode
-      let heroName = game.heroesData.find(a=>a.id === match[i].hero_id).name; //gettering the name of the current hero_id
+      let heroName = game.heroesData.find(a=>a.id === match[i].hero_id).name//gettering the name of the current hero_id
       let isRadiant = match[i].playerSlot > 127 ? false : true;
       let matchStatus = isRadiant === true ? (match[i].radiant_win === true ? "Won" : "Lost") : (match[i].radiant_win === true ? "Lost" : "Won");
 

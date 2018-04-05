@@ -2,18 +2,16 @@ import React, { Component } from 'react';
 import './App.css';
 import SearchBar from './Components/SearchBar';
 import SearchedPlayers from './Components/SearchedPlayers';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import RenderPlayer from './Components/RenderPlayer';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div className="App">
+          <h2 className="text-center site-header">Dota 2 Statistic</h2>
           <div className="container">
-            <Route exact path="/players/:id" component={RenderPlayer} />
-            <Route exact path="/players/:id/matches" component={RenderPlayer} />
-            <Route exact path="/" component={SearchBar}/>
+            <SearchBar />
             <SearchedPlayers />
           </div>
         </div>
