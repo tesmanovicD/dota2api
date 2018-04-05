@@ -32,8 +32,16 @@ export default class RecentHeroes extends Component {
         return <BarLoader/>
       case 'SUCCESS':
         return (
-          <table className="table table-bordered table-striped">
+          <table className="table table-bordered">
+            <tbody>
+              <tr className="table-heading">
+                <th>Hero</th>
+                <th>Matches</th>
+                <th>Win ratio</th>
+                <th>Last Played</th>
+              </tr>
             {this.renderRecentHeroes()}
+            </tbody>
           </table>
           )
       case 'ERROR':

@@ -25,7 +25,7 @@ class Account {
   setAccountInfo(result) {
     this.accountInfo =
       {
-        "soloCompRank": result.solo_competitive_rank,
+        "soloCompRank": result.solo_competitive_rank === null ? "none" : result.solo_competitive_rank,
         "rankTier": result.rank_tier,
         "mmrEstimate": result.mmr_estimate.estimate,
         "accountId": result.profile.account_id,
@@ -34,6 +34,7 @@ class Account {
         "profileUrl": result.profile.profileurl,
         "set": true
       }
+      console.log(this.accountInfo);
   }
   setAccountMatches(match, game, limit) {
     if(!limit) limit = match.length

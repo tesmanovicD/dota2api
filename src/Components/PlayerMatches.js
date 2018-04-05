@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getPlayerMatches, getHeroesData } from '../util';
+import { getPlayerMatches, getHeroesData, sortMatches, sortResults, setPageNavigation, getPageNumbers } from '../util';
 import { observer, inject } from 'mobx-react';
 import PrintMatch from './PrintMatch';
 import PagesPagination from './PagesPagination';
@@ -15,19 +15,18 @@ export default class PlayerMatches extends Component {
 
   componentWillMount() {
     this.props.account.currentPage = 1;
-    this.setPageNavigation();
+    setPageNavigation.bind(this)();
 
     getHeroesData()
     .then(result => this.props.game.setHeroesData(result))
-    .then(heroesData =>
-      getPlayerMatches(this.props.accountId || this.props.match.params.id)
+    .then(getPlayerMatches(this.props.accountId || this.props.match.params.id)
         .then(result => {
           this.props.account.setAccountMatches(result,this.props.game,this.props.limit)
         })
-        .then(this.getPageNumbers)
+        .then(getPageNumbers.bind(this))
         .then(this.setState({requestStatus: "SUCCESS"}))
     )
-      .catch(err => {console.log(err);this.setState({requestStatus: "ERROR"})})
+      .catch(err => {this.setState({requestStatus: "ERROR"})})
   }
 
   showComponentBasedOnReqStatus = (status) => {
@@ -38,8 +37,25 @@ export default class PlayerMatches extends Component {
       case 'SUCCESS':
         return (
           <div>
-          <table className="table table-bordered table-striped">
+          <table className="table table-bordered">
+            <tbody>
+              <tr className="table-heading">
+                <th>Hero</th>
+                <th>
+                  Result
+                  <a onClick={ () => this.sortArray("result", "ascending") }><span className="glyphicon glyphicon-chevron-up"></span></a>
+                  <a onClick={ () => this.sortArray("result", "descending") }><span className="glyphicon glyphicon-chevron-down"></span></a>
+                </th>
+                <th>Type</th>
+                <th>
+                  Duration
+                  <a onClick={ () => this.sortArray("match","ascending") }><span className="glyphicon glyphicon-chevron-up"></span></a>
+                  <a onClick={ () => this.sortArray("match","descending") }><span className="glyphicon glyphicon-chevron-down"></span></a>
+                </th>
+                <th>K/D/A</th>
+              </tr>
             {this.renderPlayerMatches()}
+          </tbody>
           </table>
           {this.props.account.pageNumbers.length > 1 &&
           <ul className="pagination">
@@ -57,14 +73,7 @@ export default class PlayerMatches extends Component {
 
   handlePageNumberClick = (e) => {
     this.props.account.currentPage = e.target.id;
-    this.setPageNavigation();
-  }
-
-  getPageNumbers = () => {
-    this.props.account.pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(this.props.account.accountMatches.length / 20); i++) {
-      this.props.account.pageNumbers.push(i);
-    }
+    setPageNavigation.bind(this)();
   }
 
   sortArray = (type, order) => {
@@ -72,42 +81,17 @@ export default class PlayerMatches extends Component {
 
     switch (type) {
       case "match":
-        this.sortMatches(matchesCopy, order);
+        sortMatches.bind(this)(matchesCopy, order);
         break;
 
       case "result":
-        this.sortResults(matchesCopy, order);
+        sortResults.bind(this)(matchesCopy, order);
         break;
 
       default:
         alert("error, type is not found");
         break;
     }
-  }
-
-  sortMatches = (matchesCopy,orderBy) => {
-    if(orderBy === "descending") {
-      matchesCopy.sort((a,b) => b["duration"] - a["duration"])
-      this.props.account.sortArray(matchesCopy)
-    } else {
-      matchesCopy.sort((a,b) => a["duration"] - b["duration"])
-      this.props.account.sortArray(matchesCopy)
-    }
-  }
-
-  sortResults = (matchesCopy, orderBy) => {
-    if(orderBy === "descending") {
-      matchesCopy.sort((a,b) => b["matchStatus"].length - a["matchStatus"].length)
-      this.props.account.sortArray(matchesCopy)
-    } else {
-      matchesCopy.sort((a,b) => a["matchStatus"].length - b["matchStatus"].length)
-      this.props.account.sortArray(matchesCopy)
-    }
-  }
-
-  setPageNavigation() {
-    this.props.account.indexOfLastTodo = this.props.account.currentPage * 20;
-    this.props.account.indexOfFirstTodo = this.props.account.indexOfLastTodo - 20;
   }
 
   renderPlayerMatches = () => {

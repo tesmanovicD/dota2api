@@ -47,3 +47,40 @@ export function secondsToMinutesAndSeconds(time) {
   let seconds = time % 60;
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
+
+export function sortMatches(matchesCopy,orderBy) {
+  if(orderBy === "descending") {
+    matchesCopy.sort((a,b) => b["duration"] - a["duration"])
+    this.props.account.sortArray(matchesCopy)
+  } else {
+    matchesCopy.sort((a,b) => a["duration"] - b["duration"])
+    this.props.account.sortArray(matchesCopy)
+  }
+}
+
+export function sortResults(matchesCopy, orderBy) {
+  if(orderBy === "descending") {
+    matchesCopy.sort((a,b) => b["matchStatus"].length - a["matchStatus"].length)
+    this.props.account.sortArray(matchesCopy)
+  } else {
+    matchesCopy.sort((a,b) => a["matchStatus"].length - b["matchStatus"].length)
+    this.props.account.sortArray(matchesCopy)
+  }
+}
+
+export function setPageNavigation() {
+  this.props.account.indexOfLastTodo = this.props.account.currentPage * 20;
+  this.props.account.indexOfFirstTodo = this.props.account.indexOfLastTodo - 20;
+}
+
+export function getPageNumbers() {
+  this.props.account.pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(this.props.account.accountMatches.length / 20); i++) {
+    this.props.account.pageNumbers.push(i);
+  }
+}
+
+export function checkWordLength(word, maxLength) {
+  let newWord = word.length >= maxLength ? (word.substring(0, maxLength)+"...") : word;
+  return newWord;
+}

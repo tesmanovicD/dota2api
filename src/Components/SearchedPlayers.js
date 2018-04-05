@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import SearchedPlayerList from './SearchedPlayerList';
-import RenderPlayer from './RenderPlayer';
-import { BrowserRouter as Router, Link, Route, Redirect } from 'react-router-dom';
+import { checkWordLength } from '../util';
+import { BrowserRouter as Router, Link, Redirect } from 'react-router-dom';
 
 @inject("account")
 @observer
@@ -13,14 +13,16 @@ export default class SearchedPlayers extends Component {
   }
 
   getSearchedPlayers = () => {
-    return this.props.account.searchedAccounts.map(account =>
-      <Link
+    return this.props.account.searchedAccounts.map(account => {
+      let name = checkWordLength(account.name, 10);
+      return <Link
         to={`/players/${account.accountId}`}
         onClick={this.renderRedirect(account.accountId)}
         key={account.accountId}>
 
-      <SearchedPlayerList account={account}/>
-    </Link>)
+      <SearchedPlayerList account={account} accountName={name}/>
+    </Link>
+    })
   }
 
   render() {
@@ -31,7 +33,7 @@ export default class SearchedPlayers extends Component {
         <div className="row">
         { this.getSearchedPlayers() }
         </div>
-        <Route path="/players/:id" component={ RenderPlayer } />
+
       </div>
     </Router>
     )

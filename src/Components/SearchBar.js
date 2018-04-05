@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { getPlayer } from '../util';
 import { inject } from 'mobx-react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch'
+
 
 @inject("account")
 export default class SearchBar extends Component {
@@ -11,10 +14,12 @@ export default class SearchBar extends Component {
   render() {
     return (
       <div className="searchbar">
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
+        <form onSubmit={this.handleSubmit} className="heroSearch">
+          <div className="form-group text-center">
               <input type="text" name="playerName" placeholder="Insert the name of the player you want to search for..."/>
-              <input type="submit" value="Submit"/>
+              <button type="submit">
+                <FontAwesomeIcon icon={faSearch} />
+              </button>
           </div>
         </form>
       </div>

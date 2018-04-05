@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+
+
+body {
+  background-color: #E9E9E9 !important;
+  color: #FFF !important;
+  font-family: 'Work Sans', sans-serif !important;
+}
+
 .glyphicon-chevron-up, .glyphicon-chevron-down {
   padding-left: 5px;
 }
@@ -7,7 +16,7 @@ span.glyphicon-chevron-up:hover, span.glyphicon-chevron-down:hover{
 }
 
 .site-header {
-  color: #f00;
+  color: #223351;
 }
 
 .playerName h2 {
@@ -53,15 +62,145 @@ span.glyphicon-chevron-up:hover, span.glyphicon-chevron-down:hover{
   margin: 5px 0px 15px 0px;
 }
 
-.active {
-  color: #1E90FF;
-  font-weight: bold;
-}
-
 .Won-class {
-  color: #A9CF54;
+  background-color: #58ee58;
 }
 
 .Lost-class {
-  color: #C23C2A;
+  background-color: #ec4545;
+}
+
+.errorMessage {
+  margin-top: 5%;
+  color: #6B8BAA;
+}
+
+.errorMessage h4 {
+  margin-top: 20px;
+}
+
+.playerInfo {
+  background-color: #26A2F3;
+  padding: 10px 15px;
+}
+
+.navigation {
+  background-color: #223351;
+  color: #6B8BAA;
+}
+
+.navigation .list-group-item {
+  background-color: transparent;
+  border: 0px;
+  padding: 0px;
+  margin: 15px 0px 12px 0px;
+}
+
+.navigation .list-group-item a:hover {
+  color: #fff;
+  border-bottom: 5px solid #fff;
+}
+
+.navigation .list-group-item a {
+  padding: 10px 15px 9px 15px;
+  color: #FFF;
+  text-decoration: none;
+}
+/* class for selected navigation item */
+.active {
+  color: #FFF;
+  border-bottom: 5px solid #fff;
+}
+
+.playermatches {
+  color: #000;
+}
+
+.playermatches table tbody tr td {
+  border: 0px;
+}
+
+.table-heading {
+  background-color: #FFF;
+}
+
+.playerOverview h2 {
+  color: #6B8BAA;
+}
+
+.mostPlayedHeroes {
+  color: #000;
+}
+
+table {
+  border: 2px solid #CCD1D1 !important;
+  font-weight: bold;
+  color: #000;
+}
+
+tbody tr {
+  background-color: #ECECEC;
+}
+
+.mostPlayedHeroes table tbody tr td {
+  border-color: #CCD1D1;
+}
+
+.siteFooter .credits {
+  background-color: #223351;
+}
+
+.siteFooter .navigation {
+  background-color: #26A2F3;
+  color: #fff;
+}
+
+.siteFooter .navigation ul {
+  margin: 0px;
+}
+
+.siteFooter .navigation ul li {
+  margin-top: 7px;
+  display: inline-block;
+  margin-bottom: 7px;
+  padding-right: 10px;
+}
+
+.logo-image {
+  border-radius: 10px;
+  margin: 50px auto;
+}
+
+/* Style the search field */
+form.heroSearch input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.heroSearch button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.heroSearch button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.heroSearch::after {
+  content: "";
+  clear: both;
+  display: table;
 }
