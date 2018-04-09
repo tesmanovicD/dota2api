@@ -7,6 +7,10 @@ body {
   font-family: 'Work Sans', sans-serif !important;
 }
 
+a {
+  text-decoration: none !important;
+}
+
 .glyphicon-chevron-up, .glyphicon-chevron-down {
   padding-left: 5px;
 }
@@ -54,8 +58,11 @@ span.glyphicon-chevron-up:hover, span.glyphicon-chevron-down:hover{
   padding: 10px 0px;
   background-color: #2E3740;
   border: 10px solid #fff;
-  border-bottom: none;
   color: #FFF;
+}
+
+.rowFix {
+  max-height: 80px;
 }
 
 .playerBox h3 {
@@ -179,6 +186,7 @@ form.heroSearch input[type=text] {
   float: left;
   width: 80%;
   background: #f1f1f1;
+  color: #000;
 }
 
 /* Style the submit button */

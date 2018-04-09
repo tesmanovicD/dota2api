@@ -5,8 +5,7 @@ import SearchedPlayers from './Components/SearchedPlayers';
 import NoMatch from './Components/NoMatch';
 import RenderPlayer from './Components/RenderPlayer';
 import SiteFooter from './Components/SiteFooter';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import mainLogo from './assets/dota2bg.jpg';
+import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 
 class App extends Component {
   render() {
@@ -14,14 +13,16 @@ class App extends Component {
       <Router>
         <div className="App">
           <div className="container">
-            <h1 className="text-center site-header">Dota 2 Statistics</h1>
+            <h1 className="text-center site-header">
+            <Link to="/">Dota 2 Statistics</Link>
+            </h1>
             <Switch>
               <Route exact path ="/" component={SearchBar} />
               <Route exact path="/players/:id" component={ RenderPlayer } />
               <Route exact path="/players/:id/matches" component={ RenderPlayer } />
               <Route component={NoMatch} />
             </Switch>
-            <img src={mainLogo} alt="site logo" className="img-responsive logo-image" />
+            
             <SearchedPlayers />
             <SiteFooter />
           </div>

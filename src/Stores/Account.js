@@ -26,8 +26,8 @@ class Account {
     this.accountInfo =
       {
         "soloCompRank": result.solo_competitive_rank === null ? "none" : result.solo_competitive_rank,
-        "rankTier": result.rank_tier,
-        "mmrEstimate": result.mmr_estimate.estimate,
+        "rankTier": result.rank_tier === null ? "none" : result.rank_tier,
+        "mmrEstimate": result.mmr_estimate.estimate === null ? "none" : result.mmr_estimate.estimate,
         "accountId": result.profile.account_id,
         "avatar": result.profile.avatar,
         "playerName": result.profile.personaname,

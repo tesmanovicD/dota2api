@@ -2,7 +2,7 @@ import React from 'react';
 import { SocialIcon } from 'react-social-icons'
 
 const SiteFooter = () => (
-  <div className="siteFooter">
+  <div className="siteFooter row">
     <div className="col-md-12 credits text-center">
       <h4>Open source Dota 2 data platform - powered by <a href="http://www.opendota.com">opendota.com</a></h4>
     </div>

@@ -3,7 +3,7 @@ import { getPlayer } from '../util';
 import { inject } from 'mobx-react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch'
-
+import mainLogo from '../assets/dota2bg.jpg';
 
 @inject("account")
 export default class SearchBar extends Component {
@@ -22,6 +22,7 @@ export default class SearchBar extends Component {
               </button>
           </div>
         </form>
+        <img src={mainLogo} alt="site logo" className="img-responsive logo-image" />
       </div>
     )
   }
