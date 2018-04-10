@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getPlayerMatches, getHeroesData, sortMatches, sortResults, setPageNavigation, getPageNumbers } from '../util';
+import { getPlayerMatches, getHeroesData, sortByAttribute, setPageNavigation, getPageNumbers } from '../util';
 import { observer, inject } from 'mobx-react';
 import PrintMatch from './PrintMatch';
 import PagesPagination from './PagesPagination';
@@ -88,11 +88,13 @@ export default class PlayerMatches extends Component {
 
     switch (type) {
       case "match":
-        sortMatches.bind(this)(matchesCopy, order);
+        let sortedMatch = sortByAttribute(matchesCopy, "duration", order)
+        this.props.account.sortArray(sortedMatch)
         break;
 
       case "result":
-        sortResults.bind(this)(matchesCopy, order);
+        sortedMatch = sortByAttribute(matchesCopy, "matchWon", order);
+        this.props.account.sortArray(sortedMatch);
         break;
 
       default:

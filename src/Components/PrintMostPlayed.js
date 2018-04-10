@@ -3,7 +3,7 @@ import React from 'react';
 const PrintRecentHeroes = (props) => (
     <tr>
       <td>
-        <img src={props.heroImg} className="img-responsive heroImage" alt={`${props.hero.hero_name} image`}/>
+        <img src={props.heroImg} className="img-responsive heroImage" alt={`${props.hero.hero_name}`}/>
         {props.hero.hero_name}
       </td>
       <td>{props.hero.games}</td>
