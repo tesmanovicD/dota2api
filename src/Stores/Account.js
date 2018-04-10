@@ -34,7 +34,6 @@ class Account {
         "profileUrl": result.profile.profileurl,
         "set": true
       }
-      console.log(this.accountInfo);
   }
   setAccountMatches(match, game, limit) {
     if(!limit) limit = match.length

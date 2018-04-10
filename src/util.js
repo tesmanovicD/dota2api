@@ -3,7 +3,16 @@ import Request from 'superagent';
 export function getPlayer(playerName) {
   const API_URL = `https://api.opendota.com/api/search?q=${playerName}`;
   return Request.get(API_URL)
-    .then(response => this.props.account.setSearchedAccounts(response.body));
+    .then(response => {
+      if(response.body.length < 1) {
+        this.props.account.setSearchedAccounts([]);
+        return alert("Username not found!");
+      }
+      return this.props.account.setSearchedAccounts(response.body)
+    })
+    .catch(err => {
+      alert(err.message)
+    })
 }
 
 export function getPlayerById(playerId) {

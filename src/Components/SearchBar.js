@@ -4,12 +4,23 @@ import { inject } from 'mobx-react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faSearch from '@fortawesome/fontawesome-free-solid/faSearch'
 import mainLogo from '../assets/dota2bg.jpg';
+import { BarLoader } from 'react-spinners';
 
 @inject("account")
 export default class SearchBar extends Component {
+
+  state = {
+    loading: false
+  }
+
   handleSubmit = (e) => {
+    this.setState({loading: true})
     e.preventDefault();
-    getPlayer.bind(this)(e.target.playerName.value);
+    getPlayer.bind(this)(e.target.playerName.value)
+    .then(() => {
+      this.setState({loading: false})
+    })
+
   }
   render() {
     return (
@@ -22,7 +33,14 @@ export default class SearchBar extends Component {
               </button>
           </div>
         </form>
-        <img src={mainLogo} alt="site logo" className="img-responsive logo-image" />
+        {this.props.account.searchedAccounts.length < 1 &&
+          <img src={mainLogo} alt="site logo" className="img-responsive logo-image" />
+        }
+        {this.state.loading &&
+          <div className="col-md-offset-3 barLoader">
+            <BarLoader width={500} height={10}/>
+          </div>
+        }
       </div>
     )
   }

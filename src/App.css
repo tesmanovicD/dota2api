@@ -212,3 +212,7 @@ form.heroSearch::after {
   clear: both;
   display: table;
 }
+
+.barLoader {
+  margin: 20px 0px;
+}
