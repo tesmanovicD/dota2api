@@ -16,7 +16,7 @@ export default class PlayerMatches extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.account.currentPage = 1;
     setPageNavigation.bind(this)();
 

@@ -51,7 +51,10 @@ export function getPlayerById(playerId) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}`;
   return Request.get(API_URL)
     .then(response => {
-      getPlayerWinRatio(playerId)
+      if(!response.body.profile) {
+        return alert("Invalid profile ID")
+      }
+      return getPlayerWinRatio(playerId)
       .then(winLoses => this.props.account.setAccountInfo(response.body, winLoses))
     })
     .catch(err => {

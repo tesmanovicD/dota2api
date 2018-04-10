@@ -18,8 +18,7 @@ class App extends Component {
             </h1>
             <Switch>
               <Route exact path ="/" component={SearchBar} />
-              <Route exact path="/players/:id" component={ RenderPlayer } />
-              <Route exact path="/players/:id/matches" component={ RenderPlayer } />
+              <Route path="/players/:id" component={ RenderPlayer } />
               <Route component={NoMatch} />
             </Switch>
 

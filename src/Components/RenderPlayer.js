@@ -9,12 +9,21 @@ import HeaderNavigation from './HeaderNavigation';
 @observer
 export default class RenderPlayer extends Component {
   state = {
-    requestStatus: "PENDING"
+    request: {
+      status: "PENDING",
+      message: ""
+    }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     getPlayerById.bind(this)(this.props.match.params.id)
-    .then(this.setState({requestStatus: "SUCCESS"}))
+    .then(() => {
+      if(!this.props.account.accountInfo.set) {
+        this.setState({request:{status: "ERROR", message: "Player has no heroes played!"}})
+      } else {
+        this.setState({request: {status: "SUCCESS"}})
+      }
+    })
   }
 
   showComponentBasedOnReqStatus = (status) => {
@@ -28,7 +37,7 @@ export default class RenderPlayer extends Component {
           )
       case 'ERROR':
         return (
-          <h2 className="alert alert-danger">Cant get the user data, try again</h2>
+          <h2 className="alert alert-danger">{this.state.request.message}</h2>
         )
     }
   }
@@ -43,7 +52,7 @@ export default class RenderPlayer extends Component {
   render() {
     return (
         <div className="PlayerOverview">
-          {this.showComponentBasedOnReqStatus(this.state.requestStatus)}
+          {this.showComponentBasedOnReqStatus(this.state.request.status)}
         </div>
       )
   }

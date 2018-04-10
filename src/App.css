@@ -120,7 +120,7 @@ span.glyphicon-chevron-up:hover, span.glyphicon-chevron-down:hover{
   color: #FFF;
   text-decoration: none;
 }
-/* class for selected navigation item */
+
 .active {
   color: #FFF;
   border-bottom: 5px solid #fff;
@@ -190,7 +190,7 @@ tbody tr {
   margin: 50px auto;
 }
 
-/* Style the search field */
+
 form.heroSearch input[type=text] {
   padding: 10px;
   font-size: 17px;
@@ -201,7 +201,7 @@ form.heroSearch input[type=text] {
   color: #000;
 }
 
-/* Style the submit button */
+
 form.heroSearch button {
   float: left;
   width: 20%;
@@ -210,7 +210,7 @@ form.heroSearch button {
   color: white;
   font-size: 17px;
   border: 1px solid grey;
-  border-left: none; /* Prevent double borders */
+  border-left: none;
   cursor: pointer;
 }
 
@@ -218,7 +218,6 @@ form.heroSearch button:hover {
   background: #0b7dda;
 }
 
-/* Clear floats */
 form.heroSearch::after {
   content: "";
   clear: both;

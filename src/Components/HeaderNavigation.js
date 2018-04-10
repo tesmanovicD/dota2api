@@ -17,7 +17,7 @@ const HeaderNavigation = inject("account")(observer(({ account }) => (
       </ul>
 
       <Route exact path={`/players/:id`} component={PlayerOverview} />
-      <Route path={`/players/:id/matches`} component={PlayerMatches} />
+      <Route exact path={`/players/:id/matches`} component={PlayerMatches} />
     </div>
   </Router>
 )));
