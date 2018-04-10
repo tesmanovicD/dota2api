@@ -110,16 +110,6 @@ export function secondsToMinutesAndSeconds(time) {
   return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
-export function sortMatches(matchesCopy,orderBy) {
-  if(orderBy === "descending") {
-    matchesCopy.sort((a,b) => b["duration"] - a["duration"])
-    this.props.account.sortArray(matchesCopy)
-  } else {
-    matchesCopy.sort((a,b) => a["duration"] - b["duration"])
-    this.props.account.sortArray(matchesCopy)
-  }
-}
-
 export function sortByAttribute(matchesCopy, attribute, orderBy) {
   if(orderBy === "descending") {
     matchesCopy.sort((a,b) => b[attribute] - a[attribute])
