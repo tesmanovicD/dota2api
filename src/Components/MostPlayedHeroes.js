@@ -10,7 +10,10 @@ import moment from 'moment';
 export default class RecentHeroes extends Component {
 
   state = {
-    requestStatus: "PENDING"
+    request: {
+      status: "PENDING",
+      message: ""
+    }
   }
 
   componentWillMount() {
@@ -21,8 +24,15 @@ export default class RecentHeroes extends Component {
             .then(heroesArr => {
               const limit = this.props.limit ? this.props.limit : heroesArr.length;
               this.props.account.setMostPlayedHeroes(heroesArr, this.props.game.heroesData, limit);
-            }).then(this.setState({requestStatus: "SUCCESS"}))
+            }).then(() =>{
+              if(this.props.account.mostPlayedHeroes.length <= 0) {
+                this.setState({request:{status: "ERROR", message: "Player has no heroes played!"}})
+              } else {
+              this.setState({request:{status: "SUCCESS"}})
+              }
+            })
         })
+        .catch(err => this.setState({request:{status: "ERROR", message: "Can't get user data, please try again"}}))
   }
 
   showComponentBasedOnReqStatus = (status) => {
@@ -46,7 +56,7 @@ export default class RecentHeroes extends Component {
           )
       case 'ERROR':
         return (
-          <h2 className="alert alert-danger">Cant get the user data, try again</h2>
+          <h2 className="alert alert-danger">{this.state.request.message}</h2>
         )
     }
   }
@@ -63,7 +73,7 @@ export default class RecentHeroes extends Component {
 
     return (
       <div className="mostPlayedHeroes">
-        {this.showComponentBasedOnReqStatus(this.state.requestStatus)}
+        {this.showComponentBasedOnReqStatus(this.state.request.status)}
       </div>
     )
   }

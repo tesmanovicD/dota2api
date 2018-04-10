@@ -17,9 +17,10 @@ export default class SearchBar extends Component {
     this.setState({loading: true})
     e.preventDefault();
     getPlayer.bind(this)(e.target.playerName.value)
-    .then(() => {
+    .then((res) => {
       this.setState({loading: false})
     })
+
 
   }
   render() {
@@ -27,7 +28,7 @@ export default class SearchBar extends Component {
       <div className="searchbar">
         <form onSubmit={this.handleSubmit} className="heroSearch">
           <div className="form-group text-center">
-              <input type="text" name="playerName" placeholder="Insert the name of the player you want to search for..."/>
+              <input type="text" name="playerName" placeholder="Insert the name of the player you want to search for..." required/>
               <button type="submit">
                 <FontAwesomeIcon icon={faSearch} />
               </button>

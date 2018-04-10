@@ -22,23 +22,23 @@ class Account {
       })
     })
   }
-  setAccountInfo(result) {
+  setAccountInfo(result, winLoses) {
     this.accountInfo =
       {
         "soloCompRank": result.solo_competitive_rank === null ? "none" : result.solo_competitive_rank,
         "rankTier": result.rank_tier === null ? "none" : result.rank_tier,
-        "mmrEstimate": result.mmr_estimate.estimate === null ? "none" : result.mmr_estimate.estimate,
+        "mmrEstimate": result.mmr_estimate.estimate === undefined ? "none" : result.mmr_estimate.estimate,
         "accountId": result.profile.account_id,
         "avatar": result.profile.avatar,
         "playerName": result.profile.personaname,
         "profileUrl": result.profile.profileurl,
+        "winRatio": (winLoses.win/(winLoses.lose + winLoses.win)*100).toFixed(2),
         "set": true
       }
   }
   setAccountMatches(match, game, limit) {
     if(!limit) limit = match.length
     this.accountMatches = [];
-
     for(let i=0; i<limit; i++) {
       let gameMode = game.gameModes.find(a=>a.id === match[i].game_mode).name; //gettering the name of the current gameMode
       let heroName = game.heroesData.find(a=>a.id === match[i].hero_id).name//gettering the name of the current hero_id
@@ -55,7 +55,7 @@ class Account {
         "gameMode": gameMode,
         "kills": match[i].kills,
         "deaths": match[i].deaths,
-        "assists": match[i].assists
+        "assists": match[i].assists,
       })
     };
     }
@@ -76,7 +76,6 @@ class Account {
 
     for(let i=0; i<limit; i++) {
       let heroName = heroesData.find(x => x.id === parseInt(heroes[i].hero_id, 10)); //gettering the name of the current hero_id
-
       heroes[i]["hero_name"] = heroName.name;
       if(heroes[i]["games"]>0) this.mostPlayedHeroes.push(heroes[i]);//if the user played at least once current hero -> store it
     }

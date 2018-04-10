@@ -10,7 +10,10 @@ import { BarLoader } from 'react-spinners';
 export default class PlayerMatches extends Component {
 
   state = {
-      requestStatus: "PENDING",
+    request: {
+      status: "PENDING",
+      message: ""
+    }
   }
 
   componentWillMount() {
@@ -21,12 +24,16 @@ export default class PlayerMatches extends Component {
     .then(result => this.props.game.setHeroesData(result))
     .then(getPlayerMatches(this.props.accountId || this.props.match.params.id)
         .then(result => {
+          if(result.length <= 0) {
+            throw new Error("")
+          }
           this.props.account.setAccountMatches(result,this.props.game,this.props.limit)
         })
+        .catch(err => this.setState({request:{status: "ERROR", message: "Player has no recent matches!"}}))
         .then(getPageNumbers.bind(this))
-        .then(this.setState({requestStatus: "SUCCESS"}))
+        .then(this.setState({request: {status:"SUCCESS"}}))
     )
-      .catch(err => {this.setState({requestStatus: "ERROR"})})
+      .catch(err => this.setState({request:{status: "ERROR", message: "Can't get user data, please try again"}}))
   }
 
   showComponentBasedOnReqStatus = (status) => {
@@ -43,14 +50,14 @@ export default class PlayerMatches extends Component {
                 <th>Hero</th>
                 <th>
                   Result
-                  <a onClick={ () => this.sortArray("result", "ascending") }><span className="glyphicon glyphicon-chevron-up"></span></a>
-                  <a onClick={ () => this.sortArray("result", "descending") }><span className="glyphicon glyphicon-chevron-down"></span></a>
+                  <a onClick={ () => this.sortArray("result", "ascending") }><span className="glyphicon glyphicon-chevron-up" title="Sort ascending"></span></a>
+                  <a onClick={ () => this.sortArray("result", "descending") }><span className="glyphicon glyphicon-chevron-down" title="Sort descending"></span></a>
                 </th>
                 <th>Type</th>
                 <th>
                   Duration
-                  <a onClick={ () => this.sortArray("match","ascending") }><span className="glyphicon glyphicon-chevron-up"></span></a>
-                  <a onClick={ () => this.sortArray("match","descending") }><span className="glyphicon glyphicon-chevron-down"></span></a>
+                  <a onClick={ () => this.sortArray("match","ascending") }><span className="glyphicon glyphicon-chevron-up" title="Sort ascending"></span></a>
+                  <a onClick={ () => this.sortArray("match","descending") }><span className="glyphicon glyphicon-chevron-down" title="Sort descending"></span></a>
                 </th>
                 <th>K/D/A</th>
               </tr>
@@ -66,7 +73,7 @@ export default class PlayerMatches extends Component {
         )
       case 'ERROR':
         return (
-          <h2 className="alert alert-danger">Can't get user data, try again</h2>
+          <h2 className="alert alert-danger">{this.state.request.message}</h2>
         )
     }
   }
@@ -108,7 +115,7 @@ export default class PlayerMatches extends Component {
   render() {
       return (
       <div className="playermatches">
-        {this.showComponentBasedOnReqStatus(this.state.requestStatus)}
+        {this.showComponentBasedOnReqStatus(this.state.request.status)}
       </div>
     )
   }
