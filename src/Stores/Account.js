@@ -43,14 +43,15 @@ class Account {
       let gameMode = game.gameModes.find(g=>g.id === match[i].game_mode).name; //gettering the name of the current gameMode
       let heroName = game.heroesDetails.find(h=>h.id === match[i].hero_id).localized_name//gettering the name of the current hero_id
       let isRadiant = match[i].playerSlot > 127 ? false : true;
-      let matchStatus = isRadiant === true ? (match[i].radiant_win === true ? "Won" : "Lost") : (match[i].radiant_win === true ? "Lost" : "Won");
+      let matchStatus = isRadiant === true ? (match[i].radiant_win === true ? 1 : 0) : (match[i].radiant_win === true ? 0 : 1);
 
       this.accountMatches.push({
         "matchId": match[i].match_id,
         "gameModeId": match[i].game_mode,
         "heroId": match[i].hero_id,
         "heroName": heroName,
-        "matchStatus": matchStatus,
+        "matchWon": matchStatus,
+        "matchStatus": matchStatus === 1 ? "Won" : "Lost",
         "duration": match[i].duration,
         "gameMode": gameMode,
         "kills": match[i].kills,

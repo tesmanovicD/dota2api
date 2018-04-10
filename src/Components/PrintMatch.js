@@ -5,7 +5,7 @@ const PrintMatch = (props) => (
 
   <tr className={`${props.match.matchStatus}-class`}>
     <td>
-      <img src={props.heroImg} className="img-responsive heroImage" alt={`${props.match.heroName} image`}/>
+      <img src={props.heroImg} className="img-responsive heroImage" alt={`${props.match.heroName}`}/>
       {props.match.heroName}</td>
     <td >{props.match.matchStatus} Match</td>
     <td>{props.match.gameMode}</td>

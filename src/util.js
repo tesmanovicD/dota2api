@@ -120,13 +120,13 @@ export function sortMatches(matchesCopy,orderBy) {
   }
 }
 
-export function sortResults(matchesCopy, orderBy) {
+export function sortByAttribute(matchesCopy, attribute, orderBy) {
   if(orderBy === "descending") {
-    matchesCopy.sort((a,b) => b["matchStatus"].length - a["matchStatus"].length)
-    this.props.account.sortArray(matchesCopy)
+    matchesCopy.sort((a,b) => b[attribute] - a[attribute])
+    return matchesCopy;
   } else {
-    matchesCopy.sort((a,b) => a["matchStatus"].length - b["matchStatus"].length)
-    this.props.account.sortArray(matchesCopy)
+    matchesCopy.sort((a,b) => a[attribute] - b[attribute])
+    return matchesCopy;
   }
 }
 
