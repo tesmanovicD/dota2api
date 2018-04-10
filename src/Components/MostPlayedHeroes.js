@@ -17,7 +17,6 @@ export default class RecentHeroes extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props.game.heroesDetails);
       getHeroesData()
         .then(result => this.props.game.setHeroesData(result))
         .then(heroesData => {
@@ -57,7 +56,7 @@ export default class RecentHeroes extends Component {
           )
       case 'ERROR':
         return (
-          <h2 className="alert alert-danger">{this.state.request.message}</h2>
+          <h3 className="alert alert-danger">{this.state.request.message}</h3>
         )
     }
   }

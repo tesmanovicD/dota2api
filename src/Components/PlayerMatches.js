@@ -73,7 +73,7 @@ export default class PlayerMatches extends Component {
         )
       case 'ERROR':
         return (
-          <h2 className="alert alert-danger">{this.state.request.message}</h2>
+          <h3 className="alert alert-danger">{this.state.request.message}</h3>
         )
     }
   }
