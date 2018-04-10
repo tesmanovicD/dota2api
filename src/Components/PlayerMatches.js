@@ -103,7 +103,10 @@ export default class PlayerMatches extends Component {
 
   renderPlayerMatches = () => {
     return this.props.account.accountMatches.slice(this.props.account.indexOfFirstTodo, this.props.account.indexOfLastTodo).map(match =>
-      <PrintMatch match={match} key={match.matchId} sort={this.sortArray} />
+      {
+      let heroImg = this.props.game.heroesDetails.find(h => h.id === match.heroId).url_small_portrait;
+      return <PrintMatch match={match} heroImg={heroImg} key={match.matchId} sort={this.sortArray} />
+      }
   )}
 
   renderNavigation = () => {

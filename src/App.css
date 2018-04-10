@@ -232,3 +232,8 @@ form.heroSearch::after {
 .searchedplayerslist {
   margin-top: 20px;
 }
+
+.heroImage {
+  display: inline-block !important;
+  margin-right: 10px;
+}

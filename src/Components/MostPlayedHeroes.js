@@ -17,6 +17,7 @@ export default class RecentHeroes extends Component {
   }
 
   componentWillMount() {
+    console.log(this.props.game.heroesDetails);
       getHeroesData()
         .then(result => this.props.game.setHeroesData(result))
         .then(heroesData => {
@@ -65,8 +66,9 @@ export default class RecentHeroes extends Component {
     let lastPlayed = new Date(hero.last_played*1000);
     let lastPlayedFormated = moment(lastPlayed).fromNow();
     let winRatio = ((hero.win/hero.games)*100).toFixed(2);
+    let heroImg = this.props.game.heroesDetails.find(h => h.id === parseInt(hero.hero_id, 10)).url_small_portrait;
 
-    return <PrintMostPlayed hero={hero} lastPlayed={lastPlayedFormated} winRatio={winRatio} key={hero.hero_id}/>
+    return <PrintMostPlayed hero={hero} lastPlayed={lastPlayedFormated} winRatio={winRatio} heroImg={heroImg} key={hero.hero_id}/>
    });
 
   render() {

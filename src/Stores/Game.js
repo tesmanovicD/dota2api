@@ -1,4 +1,5 @@
 import { observable, action } from 'mobx';
+import heroesDetails from './heroes.json';
 
 class Game {
   @observable gameModes = [
@@ -27,6 +28,7 @@ class Game {
   @observable heroesData = [
     {id: 0, name: "Not picked"},
   ];
+  @observable heroesDetails = heroesDetails;
 
   @action
   setHeroesData(hero) {
