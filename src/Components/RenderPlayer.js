@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import PlayerInfo from './PlayerInfo';
-import { getPlayerById } from '../util.js';
+import { getPlayerById, getPlayerWinRatio } from '../util.js';
 import { BarLoader } from 'react-spinners';
 import HeaderNavigation from './HeaderNavigation';
 
@@ -16,14 +16,19 @@ export default class RenderPlayer extends Component {
   }
 
   componentDidMount() {
-    getPlayerById.bind(this)(this.props.match.params.id)
-    .then(() => {
-      if(!this.props.account.accountInfo.set) {
+    getPlayerById(this.props.match.params.id)
+    .then((player) => {
+      if(!player.profile) {
         this.setState({request:{status: "ERROR", message: "Player has no heroes played!"}})
       } else {
+        getPlayerWinRatio(player.profile.account_id)
+        .then(winRatio => {
+          this.props.account.setAccountInfo(player, winRatio)
+        })
         this.setState({request: {status: "SUCCESS"}})
       }
     })
+    .catch(err => alert(err))
   }
 
   showComponentBasedOnReqStatus = (status) => {

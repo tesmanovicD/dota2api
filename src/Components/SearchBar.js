@@ -16,10 +16,12 @@ export default class SearchBar extends Component {
   handleSubmit = (e) => {
     this.setState({loading: true})
     e.preventDefault();
-    getPlayer.bind(this)(e.target.playerName.value)
-    .then((res) => {
+    getPlayer(e.target.playerName.value)
+    .then(player => {
+      if(player) { this.props.account.setSearchedAccounts(player) }
       this.setState({loading: false})
     })
+    .catch(err => alert(err))
 
 
   }

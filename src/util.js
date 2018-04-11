@@ -35,11 +35,8 @@ export function getPlayer(playerName) {
   const API_URL = `https://api.opendota.com/api/search?q=${playerName}`;
   return Request.get(API_URL)
     .then(response => {
-      if(response.body.length < 1) {
-        this.props.account.setSearchedAccounts([]);
-        return alert("Username not found!");
-      }
-      return this.props.account.setSearchedAccounts(response.body)
+      if(response.body.length < 1) { throw new Error("Username not found") }
+      return response.body
     })
     .catch(err => {
       if(err.response) return handleError(err.response.status)
@@ -51,15 +48,12 @@ export function getPlayerById(playerId) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}`;
   return Request.get(API_URL)
     .then(response => {
-      if(!response.body.profile) {
-        return alert("Invalid profile ID")
-      }
-      return getPlayerWinRatio(playerId)
-      .then(winLoses => this.props.account.setAccountInfo(response.body, winLoses))
+      if(!response.body.profile) { return alert("Invalid profile ID") }
+      return response.body
     })
     .catch(err => {
       if(err.response) return handleError(err.response.status)
-      return alert(err.message)
+      return err.message
     })
 }
 
