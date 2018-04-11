@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { getPlayerMatches, getHeroesData, sortByAttribute, setPageNavigation, getPageNumbers } from '../util';
+import { getPlayerMatches, getHeroesData, sortByAttribute, getUrlQuery } from '../util';
 import { observer, inject } from 'mobx-react';
 import PrintMatch from './PrintMatch';
 import PagesPagination from './PagesPagination';
 import { BarLoader } from 'react-spinners';
+import { withRouter } from 'react-router-dom';
 
+
+@withRouter
 @inject("account","game")
 @observer
 export default class PlayerMatches extends Component {
@@ -13,12 +16,24 @@ export default class PlayerMatches extends Component {
     request: {
       status: "PENDING",
       message: ""
-    }
+    },
+    perPage: 20
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+        this.updateLocation();
+      }
   }
 
   componentDidMount() {
-    this.props.account.currentPage = 1;
-    setPageNavigation.bind(this)();
+
+    if(this.props.location) {
+      let pageNumber = getUrlQuery(this.props.location.search, "page");
+      if (!this.props.location.search) { pageNumber = 1; }
+
+      this.setState({limit: pageNumber *  this.state.perPage, offset: (pageNumber * this.state.perPage) - this.state.perPage});
+    }
 
     getHeroesData()
     .then(result => this.props.game.setHeroesData(result))
@@ -30,10 +45,17 @@ export default class PlayerMatches extends Component {
           this.props.account.setAccountMatches(result,this.props.game,this.props.limit)
         })
         .catch(err => this.setState({request:{status: "ERROR", message: "Player has no recent matches!"}}))
-        .then(getPageNumbers.bind(this))
-        .then(this.setState({request: {status:"SUCCESS"}}))
+        .then( () => {
+          this.setState({arrayLength: this.props.account.accountMatches.length})
+          this.setState({request: {status:"SUCCESS"}})
+        })
     )
       .catch(err => this.setState({request:{status: "ERROR", message: "Can't get user data, please try again"}}))
+  }
+
+  updateLocation() {
+    let pageNumber = getUrlQuery(this.props.location.search, "page");
+    this.setState({limit: pageNumber *  this.state.perPage, offset: (pageNumber * this.state.perPage) - this.state.perPage});
   }
 
   showComponentBasedOnReqStatus = (status) => {
@@ -64,11 +86,9 @@ export default class PlayerMatches extends Component {
             {this.renderPlayerMatches()}
           </tbody>
           </table>
-          {this.props.account.pageNumbers.length > 1 &&
-          <ul className="pagination">
-            {this.renderNavigation()}
-          </ul>
-          }
+            {this.state.arrayLength &&
+              <PagesPagination arrayLength={this.state.arrayLength} setPage={this.handleSetPage} perPage={this.state.perPage} />
+            }
           </div>
         )
       case 'ERROR':
@@ -78,9 +98,8 @@ export default class PlayerMatches extends Component {
     }
   }
 
-  handlePageNumberClick = (e) => {
-    this.props.account.currentPage = e.target.id;
-    setPageNavigation.bind(this)();
+  handleSetPage = (pageNumber) => {
+    this.props.history.push(`?page=${pageNumber}`)
   }
 
   sortArray = (type, order) => {
@@ -104,18 +123,11 @@ export default class PlayerMatches extends Component {
   }
 
   renderPlayerMatches = () => {
-    return this.props.account.accountMatches.slice(this.props.account.indexOfFirstTodo, this.props.account.indexOfLastTodo).map(match =>
-      {
+    return this.props.account.accountMatches.slice(this.state.offset, this.state.limit).map(match => {
       let heroImg = this.props.game.heroesDetails.find(h => h.id === match.heroId).url_small_portrait;
       return <PrintMatch match={match} heroImg={heroImg} key={match.matchId} sort={this.sortArray} />
-      }
+    }
   )}
-
-  renderNavigation = () => {
-    return this.props.account.pageNumbers.map(pageNumber =>
-      <PagesPagination pageNumberClick={this.handlePageNumberClick} pageNumber={pageNumber} currentPage={this.props.account.currentPage} key={pageNumber}/>
-    )
-  }
 
   render() {
       return (

@@ -61,10 +61,15 @@ span.glyphicon-chevron-up:hover, span.glyphicon-chevron-down:hover{
 }
 
 .playerBox {
-  padding: 10px 0px;
+  padding: 5px 0px;
   background-color: #2E3740;
   border: 10px solid #fff;
   color: #FFF;
+  margin-top: 10px;
+}
+
+.searchedPlayer:hover {
+  cursor: pointer;
 }
 
 .rowFix {

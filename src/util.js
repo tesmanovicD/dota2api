@@ -130,3 +130,8 @@ export function checkWordLength(word, maxLength) {
   let newWord = word.length >= maxLength ? (word.substring(0, maxLength)+"...") : word;
   return newWord;
 }
+
+export function getUrlQuery(url, query) {
+  let params = new URLSearchParams(url)
+  return params.get(query);
+}

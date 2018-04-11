@@ -17,7 +17,7 @@ class App extends Component {
             Dota 2 Statistics
             </h1>
             <Switch>
-              <Route exact path ="/" component={SearchBar} />
+              <Route exact path ="/" component={ SearchBar } />
               <Route path="/players/:id" component={ RenderPlayer } />
               <Route component={NoMatch} />
             </Switch>
