@@ -30,71 +30,42 @@ function handleInternal500() {
 }
 
 //API calls
-
-export function getPlayer(playerName) {
-  const API_URL = `https://api.opendota.com/api/search?q=${playerName}`;
-  return Request.get(API_URL)
-    .then(response => {
-      if(response.body.length < 1) { throw new Error("Username not found") }
-      return response.body
-    })
+function getRequestedData(URL) {
+  return Request.get(URL)
+    .then(response => response.body)
     .catch(err => {
       if(err.response) return handleError(err.response.status)
       return alert(err.message)
     })
+}
+export function getPlayer(playerName) {
+  const API_URL = `https://api.opendota.com/api/search?q=${playerName}`;
+  return getRequestedData(API_URL);
 }
 
 export function getPlayerById(playerId) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}`;
-  return Request.get(API_URL)
-    .then(response => {
-      if(!response.body.profile) { return alert("Invalid profile ID") }
-      return response.body
-    })
-    .catch(err => {
-      if(err.response) return handleError(err.response.status)
-      return err.message
-    })
+  return getRequestedData(API_URL);
 }
 
 export function getPlayerMatches(playerId) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}/matches`;
-  return Request.get(API_URL)
-    .then(response => response.body)
-    .catch(err => {
-      if(err.response) return handleError(err.response.status)
-      return alert(err.message)
-    })
+  return getRequestedData(API_URL);
 }
 
 export function getHeroesData() {
   const API_URL = `https://api.opendota.com/api/heroes`
-  return Request.get(API_URL)
-    .then(response => response.body)
-    .catch(err => {
-      if(err.response) return handleError(err.response.status)
-      return alert(err.message)
-    })
+  return getRequestedData(API_URL)
 }
 
 export function getPlayerWinRatio(playerId) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}/wl`;
-  return Request.get(API_URL)
-    .then(response => response.body)
-    .catch(err => {
-      if(err.response) return handleError(err.response.status)
-      return alert(err.message)
-    })
+  return getRequestedData(API_URL);
 }
 
 export function getHeroesPlayed(playerId, limit) {
   const API_URL = `https://api.opendota.com/api/players/${playerId}/heroes`;
-  return Request.get(API_URL)
-    .then(response => response.body)
-    .catch(err => {
-      if(err.response) return handleError(err.response.status)
-      return alert(err.message)
-    })
+  return getRequestedData(API_URL)
 }
 
 // Other functions
@@ -111,18 +82,6 @@ export function sortByAttribute(matchesCopy, attribute, orderBy) {
   } else {
     matchesCopy.sort((a,b) => a[attribute] - b[attribute])
     return matchesCopy;
-  }
-}
-
-export function setPageNavigation() {
-  this.props.account.indexOfLastTodo = this.props.account.currentPage * 20;
-  this.props.account.indexOfFirstTodo = this.props.account.indexOfLastTodo - 20;
-}
-
-export function getPageNumbers() {
-  this.props.account.pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(this.props.account.accountMatches.length / 20); i++) {
-    this.props.account.pageNumbers.push(i);
   }
 }
 

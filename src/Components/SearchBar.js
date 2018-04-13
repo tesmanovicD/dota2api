@@ -18,7 +18,11 @@ export default class SearchBar extends Component {
     e.preventDefault();
     getPlayer(e.target.playerName.value)
     .then(player => {
-      if(player) { this.props.account.setSearchedAccounts(player) }
+      if(player && player.length > 0) { 
+        this.props.account.setSearchedAccounts(player)
+      } else {
+        alert("User not found!");
+      }
       this.setState({loading: false})
     })
     .catch(err => alert(err))
